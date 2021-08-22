@@ -1,7 +1,6 @@
 grid_summary_mat_directory='E:\WP_work\Dropbox\Harvard\Coloration_research\Multi_spectra_processing\Method_summary\Examplar_imgs\dorsal-ventral_map\summary_matrices';
 Code_directory='E:\WP_work\Dropbox\Harvard\Coloration_research\Multi_spectra_processing\Method_summary\matlab_scripts_organized\replot_tail_and_avg_shapes';
 Result_directory='E:\WP_work\Dropbox\Harvard\Coloration_research\Multi_spectra_processing\Method_summary\Examplar_imgs\dorsal-ventral_map';
-% sex_tail='all';
 bufferW=50; %Buffer range from the tip of bar to the edge of image
 defaultOpacity=0.8; %the opacity when all probility are the same
 boundaryOrNot=1; %whether to draw boundary of shape or not: 0 (no), 1 (yes)
@@ -11,17 +10,16 @@ boundaryWidth=2; %boundary width if there is any
 color1=[[245,164,190];[250,37,98]]/255; %red gradient for tail probability; low to high
 color2=[[37,299,250];[2,39,247]]/255; %blue gradient for tail curvature; low to high
 color3=[[255,255,255];[130,130,130]]/255; %grey gradient for tail curvature iqr; low to high
-shpColor=1; %the color of mean shape, default is 1
+shpColor=1; %the color of shape, default is 1
 bgColor=1; %the coor of background, default is 0.2
 
 %%
 % define tail parameter set
-phy_summary_list=dir(fullfile(grid_summary_mat_directory,'*summary*.mat')); %This need to be run before specifying the tail paramteres
 group_list={'All','Heliconius','Lycaenidae', 'NymPap'}; %These should match the group names in the summary matrix folder. No need to run all files in the folder.
 
 %[probilityRestriction, distance2Edge, distance2OutterPlot, cur_plot_size, cur_err_plot_size]
-prefered_tail_parameter_list=repmat([0, 8, 10, 40, 20], length(phy_summary_list), 1); %default setting for all
-prefered_tail_parameter_list(4,:)=[0, 10, 15, 50, 25]; %special specification
+prefered_tail_parameter_list=repmat([0, 8, 10, 40, 20], length(group_list), 1); %default setting for all
+prefered_tail_parameter_list(4,:)=[0, 10, 15, 50, 25]; %special specification for a certain group
 
 %reference list
 % [[1, 10, 15, 50, 25]; %Papilionidae; [probilityRestriction, distance2Edge, distance2OutterPlot, cur_plot_size, cur_err_plot_size]
@@ -42,10 +40,12 @@ addpath(genpath(Code_directory)) %Add the library to the path
 % To set the warning state, you must first know the message identifier for the one warning you want to enable. 
 warning('off', 'Images:initSize:adjustingMag');
 
-if ~exist(fullfile(Result_directory,'mean_shp'), 'dir')
-    mkdir(fullfile(Result_directory,'mean_shp'));
+if ~exist(fullfile(Result_directory,'shp_tail_visualization'), 'dir')
+    mkdir(fullfile(Result_directory,'shp_tail_visualization'));
 end
 disp(['corresponding folder is created / found.']);
+
+phy_summary_list=dir(fullfile(grid_summary_mat_directory,'*summary*.mat')); %This need to be run before specifying the tail paramteres
 
 %search for target file name
 in_grid_loc0=[];
@@ -200,9 +200,9 @@ for matinID=1:length(in_grid_loc0)
         imgresolution=200;
         outnameHeader=groupName;
         if boundaryOrNot==1
-            visoutname=fullfile(Result_directory,'mean_shp',[outnameHeader,'_bothSides_res-',num2str(mat_res),'x',num2str(mat_res),'_n-',num2str(sampleN),'_bg-',num2str(bgColor),'_boundary_tails_summary.png']);
+            visoutname=fullfile(Result_directory,'shp_tail_visualization',[outnameHeader,'_bothSides_res-',num2str(mat_res),'x',num2str(mat_res),'_n-',num2str(sampleN),'_bg-',num2str(bgColor),'_boundary_tails_summary.png']);
         else
-            visoutname=fullfile(Result_directory,'mean_shp',[outnameHeader,'_bothSides_res-',num2str(mat_res),'x',num2str(mat_res),'_n-',num2str(sampleN),'_bg-',num2str(bgColor),'_tails_summary.png']);
+            visoutname=fullfile(Result_directory,'shp_tail_visualization',[outnameHeader,'_bothSides_res-',num2str(mat_res),'x',num2str(mat_res),'_n-',num2str(sampleN),'_bg-',num2str(bgColor),'_tails_summary.png']);
         end
         fftail=figure('visible', 'off');
         plotTails_mean_shp(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColLastRow_probability,firstColLastRow_Cur_summary_median, firstColLastRow_Len_summary_IQR, firstColLastRow_Cur_summary_IQR,...
@@ -212,7 +212,7 @@ for matinID=1:length(in_grid_loc0)
         close(fftail);
         
         %fore wing
-        visoutname=fullfile(Result_directory,'mean_shp',[outnameHeader,'_bothSides_res-',num2str(mat_res),'x',num2str(mat_res),'_n-',num2str(sampleN),'_bg-',num2str(bgColor),'_forewing_summary.png']);
+        visoutname=fullfile(Result_directory,'shp_tail_visualization',[outnameHeader,'_bothSides_res-',num2str(mat_res),'x',num2str(mat_res),'_n-',num2str(sampleN),'_bg-',num2str(bgColor),'_forewing_summary.png']);
         fffore=figure('visible', 'off');
         plotForewing_mean_shp(wingMask_meanF2, shpColor, bgColor, boundaryColor, boundaryWidth, scaleLen);
         export_fig(fffore,visoutname, ['-',imgformat],['-r',num2str(imgresolution)]);
