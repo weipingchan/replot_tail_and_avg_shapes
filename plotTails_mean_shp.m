@@ -2,10 +2,6 @@ function plotTails_mean_shp(wingMask_meanH2,firstColLastRow_Len_summary_median,f
     probilityRestriction, distance2Edge, distance2OutterPlot, cur_plot_size, cur_err_plot_size, color1, color2,color3, shpColor, bgColor, boundaryColor, boundaryWidth, scaleLen)
     stat_cor=regionprops(wingMask_meanH2,'centroid');
     cen_meanH2=stat_cor.Centroid;
-    
-    % figure,imshow(wingMask_meanH2);hold on;
-    % plot(cen_meanH2(2),cen_meanH2(1),'rO')
-    % plot(firstColLastRow_midPts_single_line(:,2),firstColLastRow_midPts_single_line(:,1),'bO')
 
     firstColLastRow_slp=bsxfun(@minus, firstColLastRow_midPts_single_line,cen_meanH2);
 
@@ -42,7 +38,6 @@ function plotTails_mean_shp(wingMask_meanH2,firstColLastRow_Len_summary_median,f
 
     %%
     %Move the coordination for plot
-    %bufferW=50; %The ragange from the bar to the edge of image
     botExt=max(firstColLastRow_endPts_err_single_line(:,1));
     leftExt=min(firstColLastRow_endPts_err_single_line(:,2));
     
@@ -60,12 +55,10 @@ function plotTails_mean_shp(wingMask_meanH2,firstColLastRow_Len_summary_median,f
     firstColLastRow_startPts_err_single_line_adj=[firstColLastRow_startPts_err_single_line(:,1),firstColLastRow_startPts_err_single_line(:,2)+xshift];
     firstColLastRow_endPts_err_single_line_adj=[firstColLastRow_endPts_err_single_line(:,1),firstColLastRow_endPts_err_single_line(:,2)+xshift];
     
-%     distance2Edge=6;
     cur_loc0 = firstColLastRow_midPts_single_line-distance2Edge*firstColLastRow_vector;
     cur_loc1 =cur_loc0(firstColLastRow_Len_summary_single_line>0,:); %The location to plot curvature
     cur_loc=[cur_loc1(:,1),cur_loc1(:,2)+xshift];
     
-%     distance2OutterPlot=8;
     cur_err_loc0 = cur_loc0-distance2OutterPlot*firstColLastRow_vector;
     cur_err_loc1 =cur_err_loc0(firstColLastRow_Len_summary_single_line>0,:); %The location to plot curvature
     cur_err_loc=[cur_err_loc1(:,1),cur_err_loc1(:,2)+xshift];
@@ -123,7 +116,6 @@ function plotTails_mean_shp(wingMask_meanH2,firstColLastRow_Len_summary_median,f
     
     %create scale bar in black
     scalelineH=zeros(50,size(wingMask_meanH2_adj2,2))+bgColor;
-    %scaleline(:,:,:)=1;
     scale_to_edge=100;
     if size(scalelineH,2)-scaleLen-scale_to_edge<0
         scale_to_edge=floor((size(scalelineH,2)-scaleLen)/2);
@@ -140,8 +132,6 @@ function plotTails_mean_shp(wingMask_meanH2,firstColLastRow_Len_summary_median,f
     [B_wing0,~]=bwboundaries(wingMask_meanH2_adj);
     B_wing=B_wing0{1};
     
-    %Plot
-%     figure,
     imshow(wingMask_meanH2_adj3);hold on;
     if ~isempty(boundaryColor)
         plot(B_wing(:,2), B_wing(:,1), 'Color', boundaryColor, 'linewidth',boundaryWidth);
@@ -150,24 +140,14 @@ function plotTails_mean_shp(wingMask_meanH2,firstColLastRow_Len_summary_median,f
     for coID=1:size(firstColLastRow_endPts_single_line_adj,1)
         plotline=[firstColLastRow_startPts_single_line_adj(coID,:);firstColLastRow_endPts_single_line_adj(coID,:)];
         pp=plot(plotline(:,2),plotline(:,1),'Color',color_prob(coID,:),'LineWidth',5);
-%         if round(std(colorscale_prob),4)>0
             pp.Color(4) = colorscale_opacity(coID);
-%         else
-%             pp.Color(4) = 0.8;
-%         end
     end
     %Plot error bar
     for coID=1:size(firstColLastRow_endPts_err_single_line_adj,1)
         plotline=[firstColLastRow_startPts_err_single_line_adj(coID,:);firstColLastRow_endPts_err_single_line_adj(coID,:)];
         pc=plot(plotline(:,2),plotline(:,1),'Color',color_prob(coID,:),'LineWidth',0.5);
-%         if round(std(colorscale_prob),4)>0
             pc.Color(4) = colorscale_opacity(coID);
-%         else
-%             pc.Color(4) = 0.8;
-%         end
     end
-%     cur_plot_size=30;
-%     cur_err_plot_size=15;
     if ~isempty(color_cur) && ~isempty(cur_loc)
         scatter(cur_loc(:,2),cur_loc(:,1), cur_plot_size, color_cur,'filled');
     end

@@ -9,7 +9,6 @@ function plotForewing_mean_shp(wingMask_meanF2, shpColor, bgColor, boundaryColor
     
     %create scale bar in black
     scalelineF=zeros(50,size(wingMask_meanF2_adj2,2))+bgColor;
-    %scaleline(:,:,:)=1;
     scale_to_edge=100;
     if size(scalelineF,2)-scaleLen-scale_to_edge<0
         scale_to_edge=floor((size(scalelineF,2)-scaleLen)/2);
@@ -26,8 +25,6 @@ function plotForewing_mean_shp(wingMask_meanF2, shpColor, bgColor, boundaryColor
     [B_wing0,~]=bwboundaries(wingMask_meanF2_adj);
     B_wing=B_wing0{1};
     
-    %Plot
-%     figure,
     imshow(wingMask_meanF2_adj3);hold on;
     if ~isempty(boundaryColor)
         plot(B_wing(:,2), B_wing(:,1), 'Color', boundaryColor, 'linewidth',boundaryWidth);

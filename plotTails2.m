@@ -3,14 +3,9 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     stat_cor=regionprops(wingMask_meanH2,'centroid');
     cen_meanH2=stat_cor.Centroid;
 
-    % figure,imshow(wingMask_meanH2);hold on;
-    % plot(cen_meanH2(2),cen_meanH2(1),'rO')
-    % plot(firstColLastRow_midPts_single_line(:,2),firstColLastRow_midPts_single_line(:,1),'bO')
-
     firstColLastRow_slp=bsxfun(@minus, firstColLastRow_midPts_single_line,cen_meanH2);
 
     firstColLastRow_vector=firstColLastRow_slp./sqrt(firstColLastRow_slp(:,1).^2+firstColLastRow_slp(:,2).^2); %This is the vector based on the length unit =1 of the thrid side
-
 
     firstColLastRow_Len_summary_single_line=reshape(firstColLastRow_Len_summary_median,[],1);
     firstColLastRow_probability_single_line=reshape(firstColLastRow_probability,[],1);
@@ -42,7 +37,6 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
 
     %%
     %Move the coordination for plot
-    %bufferW=50; %The ragange from the bar to the edge of image
     botExt=max(firstColLastRow_endPts_err_single_line(:,1));
     leftExt=min(firstColLastRow_endPts_err_single_line(:,2));
     
@@ -124,7 +118,6 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     
     %create scale bar in black
     scalelineH=zeros(50,size(wingMask_meanH2_adj2,2))+bgColor;
-    %scaleline(:,:,:)=1;
     scale_to_edge=100;
     if size(scalelineH,2)-scaleLen-scale_to_edge<0
     scale_to_edge=floor((size(scalelineH,2)-scaleLen)/2);
@@ -140,9 +133,7 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     
     [B_wing0,~]=bwboundaries(wingMask_meanH2_adj);
     B_wing=B_wing0{1};
-    
-    %Plot
-%     figure,
+
     imshow(wingMask_meanH2_adj3);hold on;
     if ~isempty(boundaryColor)
         plot(B_wing(:,2), B_wing(:,1), 'Color', boundaryColor, 'linewidth', boundaryWidth);
@@ -151,21 +142,13 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     for coID=1:size(firstColLastRow_endPts_single_line_adj,1)
         plotline=[firstColLastRow_startPts_single_line_adj(coID,:);firstColLastRow_endPts_single_line_adj(coID,:)];
         pp=plot(plotline(:,2),plotline(:,1),'Color',color_prob(coID,:),'LineWidth',5);
-%         if round(std(colorscale_prob),4)>0
-            pp.Color(4) = colorscale_opacity(coID);
-%         else
-%             pp.Color(4) = 0.8;
-%         end
+        pp.Color(4) = colorscale_opacity(coID);
     end
     %Plot error bar
     for coID=1:size(firstColLastRow_endPts_err_single_line_adj,1)
         plotline=[firstColLastRow_startPts_err_single_line_adj(coID,:);firstColLastRow_endPts_err_single_line_adj(coID,:)];
         pc=plot(plotline(:,2),plotline(:,1),'Color',color_prob(coID,:),'LineWidth',0.5);
-%         if round(std(colorscale_prob),4)>0
-            pc.Color(4) = colorscale_opacity(coID);
-%         else
-%             pc.Color(4) = 0.8;
-%         end
+        pc.Color(4) = colorscale_opacity(coID);
     end
     if ~isempty(color_cur) && ~isempty(cur_loc)
         scatter(cur_loc(:,2),cur_loc(:,1), cur_plot_size, color_cur,'filled');

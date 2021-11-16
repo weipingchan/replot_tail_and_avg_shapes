@@ -1,6 +1,6 @@
-grid_summary_mat_directory='E:\WP_work\Dropbox\Harvard\Coloration_research\Multi_spectra_processing\Method_summary\Examplar_imgs\dorsal-ventral_map\summary_matrices';
-Code_directory='E:\WP_work\Dropbox\Harvard\Coloration_research\Multi_spectra_processing\Method_summary\matlab_scripts_organized\replot_tail_and_avg_shapes';
-Result_directory='E:\WP_work\Dropbox\Harvard\Coloration_research\Multi_spectra_processing\Method_summary\Examplar_imgs\dorsal-ventral_map';
+grid_summary_mat_directory='...\summary_matrices';
+Code_directory='...\replot_tail_and_avg_shapes';
+Result_directory='...';
 bufferW=50; %Buffer range from the tip of bar to the edge of image
 defaultOpacity=0.8; %the opacity when all probility are the same
 boundaryOrNot=1; %whether to draw boundary of shape or not: 0 (no), 1 (yes)
@@ -19,7 +19,10 @@ group_list={'All','Heliconius','Lycaenidae', 'NymPap'}; %These should match the 
 
 %[probilityRestriction, distance2Edge, distance2OutterPlot, cur_plot_size, cur_err_plot_size]
 prefered_tail_parameter_list=repmat([0, 8, 10, 40, 20], length(group_list), 1); %default setting for all
-prefered_tail_parameter_list(4,:)=[0, 10, 15, 50, 25]; %special specification for a certain group
+%prefered_tail_parameter_list(iGroup,:)=[0, 10, 15, 50, 25]; %special specification for a certain group. In this case, the ith group (NymPap) has been specified
+%An additional line speifify a group. If you want to specify one group, addes one line; two groups, two lines
+prefered_tail_parameter_list(4,:)=[0, 10, 15, 50, 25]; %special specification for a certain group. In this case, the 4th group (NymPap) has been specified
+
 
 %reference list
 % [[1, 10, 15, 50, 25]; %Papilionidae; [probilityRestriction, distance2Edge, distance2OutterPlot, cur_plot_size, cur_err_plot_size]
