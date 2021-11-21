@@ -2,16 +2,16 @@ grid_summary_mat_directory='...\summary_matrices';
 Code_directory='...\replot_tail_and_avg_shapes';
 Result_directory='...';
 bufferW=50; %Buffer range from the tip of bar to the edge of image
-defaultOpacity=0.8; %the opacity when all probility are the same
+defaultOpacity=0.8; %the opacity when all probilities are the same
 boundaryOrNot=1; %whether to draw boundary of shape or not: 0 (no), 1 (yes)
 boundaryWidth=2; %boundary width if there is any
 
 %color setting
 color1=[[245,164,190];[250,37,98]]/255; %red gradient for tail probability; low to high
 color2=[[37,299,250];[2,39,247]]/255; %blue gradient for tail curvature; low to high
-color3=[[255,255,255];[130,130,130]]/255; %grey gradient for tail curvature iqr; low to high
-shpColor=1; %the color of shape, default is 1
-bgColor=1; %the coor of background, default is 0.2
+color3=[[255,255,255];[130,130,130]]/255; %gray gradient for tail curvature iqr; low to high
+shpColor=1; %the color of the shape, default is 1
+bgColor=1; %the color of the background, default is 0.2
 
 %%
 % define tail parameter set
@@ -20,7 +20,7 @@ group_list={'All','Heliconius','Lycaenidae', 'NymPap'}; %These should match the 
 %[probilityRestriction, distance2Edge, distance2OutterPlot, cur_plot_size, cur_err_plot_size]
 prefered_tail_parameter_list=repmat([0, 8, 10, 40, 20], length(group_list), 1); %default setting for all
 %prefered_tail_parameter_list(iGroup,:)=[0, 10, 15, 50, 25]; %special specification for a certain group. In this case, the ith group (NymPap) has been specified
-%An additional line speifify a group. If you want to specify one group, addes one line; two groups, two lines
+%An additional line specify a group. If you want to specify one group, add one line; two groups, two lines
 prefered_tail_parameter_list(4,:)=[0, 10, 15, 50, 25]; %special specification for a certain group. In this case, the 4th group (NymPap) has been specified
 
 
@@ -34,13 +34,13 @@ prefered_tail_parameter_list(4,:)=[0, 10, 15, 50, 25]; %special specification fo
 % [1, 5, 7, 24, 12]]; %Nymphalidae
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%Set only above if you are not confident about your coding skill%%%%%%%%%%%%%
+%%%%%%%%%%Set only above if you are not confident in your coding skill%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 addpath(genpath(Code_directory)) %Add the library to the path
 % Turn off this warning "Warning: Image is too big to fit on screen; displaying at 33% "
-% To set the warning state, you must first know the message identifier for the one warning you want to enable. 
+% To set the warning state, you must first know the message identifier for the warning you want to enable. 
 warning('off', 'Images:initSize:adjustingMag');
 
 if ~exist(fullfile(Result_directory,'shp_tail_visualization'), 'dir')
@@ -48,7 +48,7 @@ if ~exist(fullfile(Result_directory,'shp_tail_visualization'), 'dir')
 end
 disp(['corresponding folder is created / found.']);
 
-phy_summary_list=dir(fullfile(grid_summary_mat_directory,'*summary*.mat')); %This need to be run before specifying the tail paramteres
+phy_summary_list=dir(fullfile(grid_summary_mat_directory,'*summary*.mat')); %This need to be run before specifying the tail parameters
 
 %search for target file name
 in_grid_loc0=[];
@@ -69,7 +69,7 @@ in_grid_loc0=[];
 
  %%
  %gather the tail info of all targets in order to make them comparable
- %accross panels
+ %across panels
 firstColLastRow_Prob_all_median=cell(0,1);
 firstColLastRow_Len_all_median=cell(0,1);
 firstColLastRow_Cur_all_median=cell(0,1);
@@ -141,7 +141,7 @@ for matinID=1:length(in_grid_loc0)
         scaleLen=nanmean(cell2mat(reshape(vertcat(sppmat{7}{:}),[],1)),'all');
         
         wingMask_meanF2=double(sppmat{3}{1}{1});
-%         wingMask_meanF2(wingMask_meanF2==0)=0.2; %Change background to grey
+%         wingMask_meanF2(wingMask_meanF2==0)=0.2; %Change background to gray
         %create scale bar in black
         scalelineF=zeros(50,size(wingMask_meanF2,2))+0.2;
         %scaleline(:,:,:)=1;
@@ -150,7 +150,7 @@ for matinID=1:length(in_grid_loc0)
             scale_to_edge=floor((size(scalelineF,2)-scaleLen)/2);
         end
         scalelineF(20:30,round(end-scale_to_edge-scaleLen):end-scale_to_edge,:)=1;
-        %combine all image together
+        %combine all images together
         wingMask_meanF3=vertcat(wingMask_meanF2,scalelineF);
         
 %         seg4PtsF2=sppmat{3}{1}{2};
@@ -160,12 +160,12 @@ for matinID=1:length(in_grid_loc0)
 %         scalelineH=zeros(50,size(wingMask_meanH2,2))+0.2;
 %         %scaleline(:,:,:)=1;
 %         scalelineH(20:30,round(end-100-scaleLen):end-100,:)=1;
-%         %combine all image together
+%         %combine all images together
 %         wingMask_meanH3=vertcat(wingMask_meanH2,scalelineH);
 %         seg4PtsH2=sppmat{3}{2}{2};
         wingGridsH2=sppmat{3}{2}{3};
         
-        firstColLastRow_midPts_single_line=deriveTailPlotLoc(wingGridsH2, wingMask_meanH2); %Derive the key coordinatinos for plotting tail
+        firstColLastRow_midPts_single_line=deriveTailPlotLoc(wingGridsH2, wingMask_meanH2); %Derive the key coordinates for plotting tail
 
         tail_all_info=sppmat{5};
         firstColLastRow_probability=tail_all_info{1};
@@ -184,7 +184,7 @@ for matinID=1:length(in_grid_loc0)
 
 
         if shpColor<=0.5
-            color3=[[shpColor, shpColor, shpColor]*255 ;[255,255,255]]/255; %grey gradient for curvature iqr; low to high
+            color3=[[shpColor, shpColor, shpColor]*255 ;[255,255,255]]/255; %gray gradient for curvature iqr; low to high
         end
         if boundaryOrNot==1
             if strcmp(groupName, 'male')
@@ -214,7 +214,7 @@ for matinID=1:length(in_grid_loc0)
         export_fig(fftail,visoutname, ['-',imgformat],['-r',num2str(imgresolution)]);
         close(fftail);
         
-        %fore wing
+        %forewing
         visoutname=fullfile(Result_directory,'shp_tail_visualization',[outnameHeader,'_bothSides_res-',num2str(mat_res),'x',num2str(mat_res),'_n-',num2str(sampleN),'_bg-',num2str(bgColor),'_forewing_summary.png']);
         fffore=figure('visible', 'off');
         plotForewing_mean_shp(wingMask_meanF2, shpColor, bgColor, boundaryColor, boundaryWidth, scaleLen);

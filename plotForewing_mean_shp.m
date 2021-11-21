@@ -4,8 +4,8 @@ function plotForewing_mean_shp(wingMask_meanF2, shpColor, bgColor, boundaryColor
     shpRegion=wingMask_meanF2_adj==1;
     bgRegion=wingMask_meanF2_adj==0;
     wingMask_meanF2_adj2=wingMask_meanF2_adj;
-    wingMask_meanF2_adj2(shpRegion)=shpColor; %Change shape colort to grey
-    wingMask_meanF2_adj2( bgRegion)=bgColor; %Change background to grey
+    wingMask_meanF2_adj2(shpRegion)=shpColor; %Change shape color to gray
+    wingMask_meanF2_adj2( bgRegion)=bgColor; %Change background to gray
     
     %create scale bar in black
     scalelineF=zeros(50,size(wingMask_meanF2_adj2,2))+bgColor;
@@ -19,7 +19,7 @@ function plotForewing_mean_shp(wingMask_meanF2, shpColor, bgColor, boundaryColor
         scaleColor=0;
     end
     scalelineF(20:30,round(end-scale_to_edge-scaleLen):end-scale_to_edge,:)=scaleColor;
-    %combine all image together
+    %combine all images together
     wingMask_meanF2_adj3=vertcat(wingMask_meanF2_adj2, scalelineF);
     
     [B_wing0,~]=bwboundaries(wingMask_meanF2_adj);

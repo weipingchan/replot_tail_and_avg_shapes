@@ -58,17 +58,17 @@ function eps2pdf(source, dest, crop, append, gray, quality, gs_options)
 % 20/03/17: Added informational message in case of GS croak (issue #186)
 % 16/01/18: Improved appending of multiple EPS files into single PDF (issue #233; thanks @shartjen)
 
-    % Intialise the options string for ghostscript
+    % Intialize the options string for ghostscript
     options = ['-q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile="' dest '"'];
-    % Set crop option
+    % Set crfp)
+        options = [options ' -sFONTPATH="' fp '"'];
+   op option
     if nargin < 3 || crop
         options = [options ' -dEPSCrop'];
     end
     % Set the font path
     fp = font_path();
-    if ~isempty(fp)
-        options = [options ' -sFONTPATH="' fp '"'];
-    end
+    if ~isempty( end
     % Set the grayscale option
     if nargin > 4 && gray
         options = [options ' -sColorConversionStrategy=Gray -dProcessColorModel=/DeviceGray'];

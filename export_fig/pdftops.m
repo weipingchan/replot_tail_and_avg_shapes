@@ -17,7 +17,7 @@ function varargout = pdftops(cmd)
 %   cmd - Command string to be passed into pdftops (e.g. '-help').
 %
 % OUT:
-%   status - 0 iff command ran without problem.
+%   status - 0 if command ran without problem.
 %   result - Output from pdftops.
 
 % Copyright: Oliver Woodford, 2009-2010
@@ -78,7 +78,7 @@ function path_ = xpdf_path
     %end
 
     % Provide an alternative possible explanation as per issue #137
-    errMsg2 = 'If you have pdftops installed, perhaps Matlab is shaddowing it as described in ';
+    errMsg2 = 'If you have pdftops installed, perhaps Matlab is shadowing it as described in ';
     url2 = 'https://github.com/altmany/export_fig/issues/137';
     fprintf(2, '%s\n', [errMsg2 '<a href="matlab:web(''-browser'',''' url2 ''');">issue #137</a>']);
     errMsg2 = [errMsg2 url1];
@@ -117,7 +117,7 @@ function path_ = xpdf_path
                     return
                 end
 
-            otherwise  % User hit Cancel or closed window
+            otherwise  % User hit cancel or closed window
                 break
         end
     end

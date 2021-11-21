@@ -5,7 +5,7 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
 
     firstColLastRow_slp=bsxfun(@minus, firstColLastRow_midPts_single_line,cen_meanH2);
 
-    firstColLastRow_vector=firstColLastRow_slp./sqrt(firstColLastRow_slp(:,1).^2+firstColLastRow_slp(:,2).^2); %This is the vector based on the length unit =1 of the thrid side
+    firstColLastRow_vector=firstColLastRow_slp./sqrt(firstColLastRow_slp(:,1).^2+firstColLastRow_slp(:,2).^2); %This is a vector based on the length unit =1 of the third side
 
     firstColLastRow_Len_summary_single_line=reshape(firstColLastRow_Len_summary_median,[],1);
     firstColLastRow_probability_single_line=reshape(firstColLastRow_probability,[],1);
@@ -15,13 +15,13 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     if probilityRestriction==1 %use probabilty value to restrict the output
         firstColLastRow_Len_summary_single_line(firstColLastRow_probability_single_line==0)=0; %new added
     end
-    %inhibt those location having only one record (no IQR)
+    %inhibt locations with only one record (no IQR)
     firstColLastRow_Len_summary_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
     firstColLastRow_probability_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
     firstColLastRow_Cur_summary_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
     firstColLastRow_Cur_summary_IQR_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
 
-    %Derive the start and end point of line segments
+    %Derive the start and end points of line segments
     firstColLastRow_endPts_single_line0 = firstColLastRow_midPts_single_line+firstColLastRow_Len_summary_single_line.*firstColLastRow_vector;
     firstColLastRow_endPts_single_line = firstColLastRow_endPts_single_line0(firstColLastRow_Len_summary_single_line>0,:);
     firstColLastRow_startPts_single_line  = firstColLastRow_midPts_single_line(firstColLastRow_Len_summary_single_line>0,:);
@@ -36,7 +36,7 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     curv_color_err=firstColLastRow_Cur_summary_IQR_single_line(firstColLastRow_Len_summary_single_line>0,:);    
 
     %%
-    %Move the coordination for plot
+    %Move the coordination for the plot
     botExt=max(firstColLastRow_endPts_err_single_line(:,1));
     leftExt=min(firstColLastRow_endPts_err_single_line(:,2));
     
@@ -95,7 +95,7 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
 
 %     color1=[[245,164,190];[250,37,98]]/255; %red gradient for probability
 %     color2=[[37,299,250];[2,39,247]]/255; %blue gradient for curvature
-%     color3=[[255,255,255];[0,0,0]]/255; %grey gradient for curvature iqr
+%     color3=[[255,255,255];[0,0,0]]/255; %gray gradient for curvature iqr
     if ~isempty(colorscale_prob)
         color_prob=color1(1,:).*(1-colorscale_prob)+color1(2,:).*(colorscale_prob);
     end
@@ -113,8 +113,8 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     shpRegion=wingMask_meanH2_adj==1;
     bgRegion=wingMask_meanH2_adj==0;
     wingMask_meanH2_adj2=wingMask_meanH2_adj;
-    wingMask_meanH2_adj2(shpRegion)=shpColor; %Change shape colort to grey
-    wingMask_meanH2_adj2( bgRegion)=bgColor; %Change background to grey
+    wingMask_meanH2_adj2(shpRegion)=shpColor; %Change shape color to gray
+    wingMask_meanH2_adj2( bgRegion)=bgColor; %Change background to gray
     
     %create scale bar in black
     scalelineH=zeros(50,size(wingMask_meanH2_adj2,2))+bgColor;
@@ -128,7 +128,7 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
         scaleColor=0;
     end
     scalelineH(20:30,round(end-scale_to_edge-scaleLen):end-scale_to_edge,:)=scaleColor;
-    %combine all image together
+    %combine all images together
     wingMask_meanH2_adj3=vertcat(wingMask_meanH2_adj2, scalelineH);
     
     [B_wing0,~]=bwboundaries(wingMask_meanH2_adj);
