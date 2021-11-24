@@ -1545,7 +1545,7 @@ function change_rgb_to_cmyk(fname)  % convert RGB => CMYK within an EPS file
         % Read the EPS file into memory
         fstrm = read_write_entire_textfile(fname);
 
-        % Replace all gray-scale colors
+        % Replace all grayscale colors
         fstrm = regexprep(fstrm, '\n([\d.]+) +GC\n', '\n0 0 0 ${num2str(1-str2num($1))} CC\n');
         
         % Replace all RGB colors

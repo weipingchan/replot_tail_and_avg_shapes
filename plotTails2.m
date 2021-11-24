@@ -15,7 +15,7 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     if probilityRestriction==1 %use probabilty value to restrict the output
         firstColLastRow_Len_summary_single_line(firstColLastRow_probability_single_line==0)=0; %new added
     end
-    %inhibt locations with only one record (no IQR)
+    %inhibit locations with only one record (no IQR)
     firstColLastRow_Len_summary_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
     firstColLastRow_probability_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
     firstColLastRow_Cur_summary_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
@@ -59,7 +59,7 @@ function plotTails2(wingMask_meanH2,firstColLastRow_Len_summary_median,firstColL
     cur_loc1 =cur_loc0(firstColLastRow_Len_summary_single_line>0,:); %The location to plot curvature
     cur_loc=[cur_loc1(:,1),cur_loc1(:,2)+xshift];
     
-%     distance2OutterPlot=8;
+%     distance2OuterPlot=8;
     cur_err_loc0 = cur_loc0-distance2OutterPlot*firstColLastRow_vector;
     cur_err_loc1 =cur_err_loc0(firstColLastRow_Len_summary_single_line>0,:); %The location to plot curvature
     cur_err_loc=[cur_err_loc1(:,1),cur_err_loc1(:,2)+xshift];

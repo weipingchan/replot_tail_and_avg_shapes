@@ -14,7 +14,7 @@ function plotTails_mean_shp(wingMask_meanH2,firstColLastRow_Len_summary_median,f
     firstColLastRow_Len_summary_IQR_single_line=reshape(firstColLastRow_Len_summary_IQR,[],1)/2; %Get half IQR
     firstColLastRow_Cur_summary_IQR_single_line=reshape(firstColLastRow_Cur_summary_IQR,[],1)/2; %Get half IQR
     
-    %inhibt locations with only one record (no IQR)
+    %inhibit locations with only one record (no IQR)
     firstColLastRow_Len_summary_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
     firstColLastRow_probability_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
     firstColLastRow_Cur_summary_single_line(firstColLastRow_Len_summary_IQR_single_line==0)=0;
